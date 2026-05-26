@@ -504,6 +504,10 @@ PrefabInstance:
       propertyPath: m_GravityScale
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7288625534072320236, guid: 9852e7f8da9bbdb419a82d238d73b7c3, type: 3}
+      propertyPath: m_LinearDamping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9177077716773890115, guid: 9852e7f8da9bbdb419a82d238d73b7c3, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.7

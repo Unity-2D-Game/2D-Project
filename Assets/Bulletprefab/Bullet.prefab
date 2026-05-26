@@ -153,9 +153,9 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 1
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 0.3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -163,9 +163,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &7084596043976849012
 MonoBehaviour:
@@ -179,7 +179,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fb80133a1f9fd43a5a59ad08bb1176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  gravity: 1.5
   lifeTime: 2
   maxSpeed: 30
-  drag: 1.5

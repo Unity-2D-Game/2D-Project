@@ -39,5 +39,6 @@ public class GunScript : MonoBehaviour
 
         Bullet b = bullet.GetComponent<Bullet>();
         b.SetVelocity(firePoint.right, bulletSpeed);
+
     }
 }

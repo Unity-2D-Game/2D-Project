@@ -11,6 +11,11 @@ public class GunScript : MonoBehaviour
     public float fireRate = 0.2f;
     private float nextFireTime;
 
+    public float NextFireTime
+    {
+        get { return nextFireTime; }
+    }
+
     void Update()
     {
         Aim();

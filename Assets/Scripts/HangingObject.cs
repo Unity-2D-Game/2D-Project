@@ -1,64 +1,71 @@
 using UnityEngine;
 
-// ÀÌ ½ºÅ©¸³Æ®¸¦ Ãß°¡ÇÒ ¶§ LineRenderer, HingeJoint2D, Rigidbody2D ÄÄÆ÷³ÍÆ®°¡ ÀÚµ¿À¸·Î ÇÔ²² Ãß°¡µÇµµ·Ï °­Á¦ÇÔ
-[RequireComponent(typeof(LineRenderer))] // ½Ç ÀÌ¹ÌÁö (½Ã°¢ÀûÀ¸·Î º¸ÀÌ´Â)
-[RequireComponent(typeof(HingeJoint2D))] // ¿ÀºêÁ§Æ® °íÁ¤ ¸ø (+ ½Ç ±â´É)
-[RequireComponent(typeof(Rigidbody2D))]   // ºÎÇÇ¿Í ¹«°Ô ºÎ¿©
+// ì´ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ì¶”ê°€í•  ë•Œ LineRenderer, HingeJoint2D, Rigidbody2D ì»´í¬ë„ŒíŠ¸ê°€ ìë™ìœ¼ë¡œ í•¨ê»˜ ì¶”ê°€ë˜ë„ë¡ ê°•ì œí•¨
+[RequireComponent(typeof(LineRenderer))] // ì‹¤ ì´ë¯¸ì§€ (ì‹œê°ì ìœ¼ë¡œ ë³´ì´ëŠ”)
+[RequireComponent(typeof(HingeJoint2D))] // ì˜¤ë¸Œì íŠ¸ ê³ ì • ëª» (+ ì‹¤ ê¸°ëŠ¥)
+[RequireComponent(typeof(Rigidbody2D))]   // ë¶€í”¼ì™€ ë¬´ê²Œ ë¶€ì—¬
+
 public class HangingObject : MonoBehaviour
 {
-    // ÄÄÆ÷³ÍÆ®µéÀ» ÄÚµå¿¡¼­ Á¦¾îÇÏ±â À§ÇØ ´ã¾ÆµÑ ³»ºÎ º¯¼ö ¼±¾ğ
+    // ì»´í¬ë„ŒíŠ¸ë“¤ì„ ì½”ë“œì—ì„œ ì œì–´í•˜ê¸° ìœ„í•´ ë‹´ì•„ë‘˜ ë‚´ë¶€ ë³€ìˆ˜ ì„ ì–¸
     private LineRenderer lineRenderer;
     private HingeJoint2D hingeJoint2D;
     private Rigidbody2D rigidBody2D;
 
-    [Header(" ¿¬°á ÁöÁ¡ (Anchor)")]
-    [SerializeField] private Transform anchorTransform; // ½ÇÀÌ °íÁ¤µÉ ÃµÀå À§Ä¡ µ¥ÀÌÅÍ¸¦ ÀúÀå
+    [Header(" ì—°ê²° ì§€ì  (Anchor)")]
+    [SerializeField] private Transform anchorTransform; // ì‹¤ì´ ê³ ì •ë  ì²œì¥ ìœ„ì¹˜ ë°ì´í„°ë¥¼ ì €ì¥
 
-    // °ÔÀÓ ½ÃÀÛ ½Ã ÃÖÃÊ 1È¸¸¸ ½ÇÇà
+    // ê²Œì„ ì‹œì‘ ì‹œ ìµœì´ˆ 1íšŒë§Œ ì‹¤í–‰
     void Start()
     {
-        // GetComponent·Î °ªÀ» ¹Ş¾Æ¿Í¼­ º¯¼ö¿¡ °¢°¢ ÇÒ´ç
+
+        // GetComponentë¡œ ê°’ì„ ë°›ì•„ì™€ì„œ ë³€ìˆ˜ì— ê°ê° í• ë‹¹
         lineRenderer = GetComponent<LineRenderer>();
         hingeJoint2D = GetComponent<HingeJoint2D>();
         rigidBody2D = GetComponent<Rigidbody2D>();
 
-        // LineRenderer(ÁÙ ±×¸®±â) ÃÊ±â ¼³Á¤
-        lineRenderer.positionCount = 2;  // Á¡ 2°³¸¦ ÀÌ¾î¼­ ÇÏ³ªÀÇ ¼±À» ¸¸µê
-        lineRenderer.startWidth = 0.05f; // ½ÇÀÇ ½ÃÀÛÁ¡ µÎ²² ¼³Á¤
-        lineRenderer.endWidth = 0.05f;   // ½ÇÀÇ ³¡Á¡ µÎ²²¸¦ ¶È°°ÀÌ ¸ÂÃç ÀÏÁ¤ÇÑ ±½±â·Î ¸¸µê
-
+        // LineRenderer(ì¤„ ê·¸ë¦¬ê¸°) ì´ˆê¸° ì„¤ì •
+        lineRenderer.positionCount = 2;  // ì  2ê°œë¥¼ ì´ì–´ì„œ í•˜ë‚˜ì˜ ì„ ì„ ë§Œë“¦
+        lineRenderer.startWidth = 0.05f; // ì‹¤ì˜ ì‹œì‘ì  ë‘ê»˜ ì„¤ì •
+        lineRenderer.endWidth = 0.05f;   // ì‹¤ì˜ ëì  ë‘ê»˜ë¥¼ ë˜‘ê°™ì´ ë§ì¶° ì¼ì •í•œ êµµê¸°ë¡œ ë§Œë“¦
     }
 
-    // ¸Å ÇÁ·¹ÀÓ¸¶´Ù ½ÇÇà (ÃÊ´ç ¾à 60È¸ ÀÌ»ó È­¸éÀ» °»½ÅÇÒ ¶§¸¶´Ù È£Ãâ)
+    // ë§¤ í”„ë ˆì„ë§ˆë‹¤ ì‹¤í–‰ (ì´ˆë‹¹ ì•½ 60íšŒ ì´ìƒ í™”ë©´ì„ ê°±ì‹ í•  ë•Œë§ˆë‹¤ í˜¸ì¶œ)
     void Update()
     {
-        // ÃµÀå ¿ÀºêÁ§Æ®°¡ Á¤»óÀûÀ¸·Î Á¸ÀçÇÒ ¶§¸¸ ½ÇÀ» ±×¸² (¹æ¾îÄÚµå)
+        // ì²œì¥ ì˜¤ë¸Œì íŠ¸ê°€ ì •ìƒì ìœ¼ë¡œ ì¡´ì¬í•  ë•Œë§Œ ì‹¤ì„ ê·¸ë¦¼ (ë°©ì–´ì½”ë“œ)
         if (anchorTransform != null)
         {
-            // ½ÇÀÇ 0¹øÂ° Á¡(½ÃÀÛÁ¡)ÀÇ À§Ä¡¸¦ ÁöÁ¤µÈ ÃµÀåÀÇ ½Ç½Ã°£ À§Ä¡·Î ÁöÁ¤
+            // ì‹¤ì˜ 0ë²ˆì§¸ ì (ì‹œì‘ì )ì˜ ìœ„ì¹˜ë¥¼ ì§€ì •ëœ ì²œì¥ì˜ ì‹¤ì‹œê°„ ìœ„ì¹˜ë¡œ ì§€ì •
             lineRenderer.SetPosition(0, anchorTransform.position);
-            // ½ÇÀÇ 1¹øÂ° Á¡(³¡Á¡)ÀÇ À§Ä¡¸¦ ÇöÀç Èçµé¸®´Â ÀÚ±â ÀÚ½ÅÀÇ ½Ç½Ã°£ À§Ä¡·Î ÁöÁ¤
+            
+            // ì‹¤ì˜ 1ë²ˆì§¸ ì (ëì )ì˜ ìœ„ì¹˜ë¥¼ í˜„ì¬ í”ë“¤ë¦¬ëŠ” ìê¸° ìì‹ ì˜ ì‹¤ì‹œê°„ ìœ„ì¹˜ë¡œ ì§€ì •
             lineRenderer.SetPosition(1, transform.position);
         }
     }
 
     /// <summary>
-    /// ¿ÜºÎ(¿¹: ÃÑ¾Ë, Æø¹ß)¿¡¼­ È£ÃâÇÏ¿© ¿ÀºêÁ§Æ®¿¡ ¼ø°£ÀûÀÎ Ãæ°İÀ» ÁÖ´Â ÇÔ¼ö
+    /// ì™¸ë¶€(ì˜ˆ: ì´ì•Œ, í­ë°œ)ì—ì„œ í˜¸ì¶œí•˜ì—¬ ì˜¤ë¸Œì íŠ¸ì— ìˆœê°„ì ì¸ ì¶©ê²©ì„ ì£¼ëŠ” í•¨ìˆ˜
     /// </summary>
     public void OnHit(Vector2 forceDirection, float forceMagnitude)
     {
-        // ¼ø¼öÇÑ ¹æÇâ µ¥ÀÌÅÍ¸¸ ³²±â±â À§ÇØ º¤ÅÍ Á¤±ÔÈ­(Normalized) ÁøÇà
-        // Áö¼ÓÀûÀÎ ÈûÀÌ ¾Æ´Ñ, Å¹! Ä¡´Â ¼ø°£ÀûÀÎ Å¸°İ°¨À» À§ÇØ ForceMode2D.Impulse »ç¿ë
+        // ìˆœìˆ˜í•œ ë°©í–¥ ë°ì´í„°ë§Œ ë‚¨ê¸°ê¸° ìœ„í•´ ë²¡í„° ì •ê·œí™” (ì´ì•Œ ë°©í–¥ì´ ë„ˆë¬´ ì§§ê±°ë‚˜ ê¸¸ì–´ë„ ì¼ì •í•œ í˜ì„ ì£¼ë„ë¡)
         rigidBody2D.AddForce(forceDirection.normalized * forceMagnitude, ForceMode2D.Impulse);
-    }
 
-    // ÀÌ ¿ÀºêÁ§Æ®¿¡ ¹«¾ğ°¡ ¹°Ã¼°¡ ºÎµúÇûÀ» ¶§ À¯´ÏÆ¼°¡ ÀÚµ¿À¸·Î ½ÇÇàÇØÁÖ´Â ÇÔ¼ö
+        // [GameManager ì‹±ê¸€í†¤ ì—°ë™ ì¶”ê°€]
+        // ì˜¤ë¸Œì íŠ¸ê°€ ì´ì— ë§ì•„ì„œ ê²©ë ¬í•˜ê²Œ í”ë“¤ë¦´ ë•Œë§ˆë‹¤ ê²Œì„ ë§¤ë‹ˆì €ì—ê²Œ ì•Œë¦¼ì„ ë³´ë‚´ë„ë¡
+        if (GameManager.Instance != null)
+        {
+            Debug.Log($"[ì˜¤ë¸Œì íŠ¸ â” GameManager] ì˜¤ë¸Œì íŠ¸ê°€ íƒ€ê²©ì„ ë°›ì•˜ìŠµë‹ˆë‹¤.");
+        }
+    }
+    // ì´ ì˜¤ë¸Œì íŠ¸ì— ë¬´ì–¸ê°€ ë¬¼ì²´ê°€ ë¶€ë”ªí˜”ì„ ë•Œ ìœ ë‹ˆí‹°ê°€ ìë™ìœ¼ë¡œ ì‹¤í–‰í•´ì£¼ëŠ” í•¨ìˆ˜
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // ºÎµúÈù ¹°Ã¼ÀÇ ÅÂ±×°¡ "Player"ÀÎÁö È®ÀÎ
+        // ë¶€ë”ªíŒ ë¬¼ì²´ì˜ íƒœê·¸ê°€ "Player"ì¸ì§€ í™•ì¸
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log($"{collision.gameObject.name}¿Í Ãæµ¹! ¿ÀºêÁ§Æ®°¡ Èçµé¸³´Ï´Ù.");
+            Debug.Log($"{collision.gameObject.name}ì™€ ì¶©ëŒ! ì˜¤ë¸Œì íŠ¸ê°€ í”ë“¤ë¦½ë‹ˆë‹¤.");
         }
     }
 }

@@ -601,8 +601,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapManager
   mapPrefabs:
   - {fileID: 5886841407690674226, guid: c1ccaf02185e5614cb068daa58d72a89, type: 3}
-  - {fileID: 5886841407690674226, guid: 89fc6b8deab5d8743ab67117f1c6551d, type: 3}
-  - {fileID: 5886841407690674226, guid: 01a7684a8a634e54d8bc19fff4a98358, type: 3}
+  - {fileID: 5886841407690674226, guid: 47a40f920ad6b0441950666b118fa175, type: 3}
+  - {fileID: 5886841407690674226, guid: 35681a7ad0d92eb4f9674d9894b12e24, type: 3}
   mapSpawnPoint: {fileID: 1763518045}
   currentMap: {fileID: 0}
   activeRopes: []
@@ -813,7 +813,7 @@ Transform:
   m_GameObject: {fileID: 4029777946853549573}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.04, y: -0.12, z: 0}
   m_LocalScale: {x: 25, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -6,15 +6,17 @@ public class PlayerHealth : MonoBehaviour
     public float maxHp = 100f;                   // 최대 체력 (카드로 수정 가능)
     public float CurrentHp { get; private set; } // 현재 체력 (외부에서 읽기만 가능)
     public float knockbackForce; //플레이어가 뒤로 날아가는 힘 크기 (총알 충돌시)
-    private PlayerBlock block;
+    private shield sh;
     private Color originalColor; //현제 플레이어 색 저장
     private SpriteRenderer sr;
     private Rigidbody2D rb;
+    private PlayerMovement playerMovement;
+    public event System.Action OnDeath;
 
     void Start()
     {
         CurrentHp = maxHp;
-        block = GetComponent<PlayerBlock>();
+        sh = GetComponent<shield>();
         sr = GetComponent<SpriteRenderer>();
         originalColor = sr.color;
         rb = GetComponent<Rigidbody2D>();
@@ -31,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            if (block.IsBlocking)
+            if (sh.IsBlocking)
                 return; // 쉴드 켜져있으면 데미지 무시
             TakeDamage(10f);
             StartCoroutine(flashdamage());
@@ -54,14 +56,6 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         CurrentHp = Mathf.Clamp(CurrentHp - damage, 0, maxHp);
-        if (CurrentHp <= 0) Die();
-    }
-
-
-    public void Die()
-    {
-        // 플레이어가 죽으면 다음 라운드로 넘어가야 하지만, 팀이랑 상의 하고 구현해야 할 듯
-        // 임시: 플레이어 비활성화
-        gameObject.SetActive(false); 
+        if (CurrentHp <= 0) OnDeath?.Invoke();
     }
 }

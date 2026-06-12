@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerBlock : MonoBehaviour
+public class shield : MonoBehaviour
 {
     [Header("블록 설정")]
     public float cooltime = 2f; //보호막 사용 주기    
@@ -27,8 +27,8 @@ public class PlayerBlock : MonoBehaviour
     void Update()
     {
         //각 플레이어 쉴드 클릭 감지
-        bool player_1_Click = Keyboard.current.jKey.wasPressedThisFrame; //1p = j
-        bool player_2_Click = Keyboard.current.zKey.wasPressedThisFrame; //2p = x
+        bool player_1_Click = Keyboard.current.sKey.wasPressedThisFrame; //1p = j
+        bool player_2_Click = Keyboard.current.downArrowKey.wasPressedThisFrame; //2p = x
 
         if (playerNumber == 1) //1p 플레이어
         {
@@ -85,10 +85,6 @@ public class PlayerBlock : MonoBehaviour
                 currcolltime = 0f; //쿨타임 초기화
                 IsBlocking = true;
             }
-        }
-
-
-        
+        }  
     }
-
 }

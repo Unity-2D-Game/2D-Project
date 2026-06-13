@@ -11,6 +11,9 @@ public class GunScript : MonoBehaviour
     public float fireRate = 0.2f;
     private float nextFireTime;
 
+    [Header("Player")]
+    public PlayerMovement player;
+
     public float NextFireTime
     {
         get { return nextFireTime; }
@@ -18,32 +21,31 @@ public class GunScript : MonoBehaviour
 
     void Update()
     {
-        Aim();
-
-        if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
+        if ((Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.Keypad1))
+            && Time.time >= nextFireTime)
         {
             nextFireTime = Time.time + fireRate;
             Shoot();
         }
     }
 
-    void Aim()
-    {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0f;
-
-        Vector2 direction = mousePos - transform.position;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-    }
-
     void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet =
+            Instantiate(bulletPrefab,
+                        firePoint.position,
+                        Quaternion.identity);
+
+        Vector2 shootDirection =
+            player.FacingDirection > 0
+            ? Vector2.right
+            : Vector2.left;
 
         Bullet b = bullet.GetComponent<Bullet>();
-        b.SetVelocity(firePoint.right, bulletSpeed);
 
+        if (b != null)
+        {
+            b.SetVelocity(shootDirection, bulletSpeed);
+        }
     }
 }

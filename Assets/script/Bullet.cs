@@ -1,19 +1,28 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
 public class Bullet : MonoBehaviour
 {
     [Header("Bullet Settings")]
     public float lifeTime = 2f;
-    public float maxSpeed = 30f;
+    public float maxSpeed = 20f;
 
+    [Header("Damage Settings")]
+    public int damage = 20;
+
+    [Header("Bounce Settings")]
+    public int maxBounceCount = 1;
+
+    private int bounceCount = 0;
     private Rigidbody2D rb;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Start()
+    private void Start()
     {
         Destroy(gameObject, lifeTime);
     }
@@ -23,7 +32,7 @@ public class Bullet : MonoBehaviour
         rb.linearVelocity = direction.normalized * speed;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         // 최대 속도 제한
         rb.linearVelocity =
@@ -36,8 +45,26 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject);
+        // 플레이어 피격 처리
+        PlayerHealth playerHealth =
+            collision.gameObject.GetComponent<PlayerHealth>();
+
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(damage);
+
+            Destroy(gameObject);
+            return;
+        }
+
+        // 벽/바닥/천장 등에 대한 튕김 처리
+        bounceCount++;
+
+        if (bounceCount > maxBounceCount)
+        {
+            Destroy(gameObject);
+        }
     }
 }
